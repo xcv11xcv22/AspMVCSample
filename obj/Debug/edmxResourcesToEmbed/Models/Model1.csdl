@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="member">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="qqqs" Relationship="Self.FK_memberqqq" FromRole="members" ToRole="qqqs" />
+  </EntityType>
+  <EntityType Name="qqq">
+    <Key>
+      <PropertyRef Name="ud" />
+    </Key>
+    <Property Name="ud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="member_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="member" Relationship="Self.FK_memberqqq" FromRole="qqqs" ToRole="members" />
+  </EntityType>
+  <Association Name="FK_memberqqq">
+    <End Role="members" Type="Self.member" Multiplicity="1" />
+    <End Role="qqqs" Type="Self.qqq" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="members">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="qqqs">
+        <PropertyRef Name="member_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="members" EntityType="Self.member" />
+    <EntitySet Name="qqqs" EntityType="Self.qqq" />
+    <AssociationSet Name="FK_memberqqq" Association="Self.FK_memberqqq">
+      <End Role="members" EntitySet="members" />
+      <End Role="qqqs" EntitySet="qqqs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

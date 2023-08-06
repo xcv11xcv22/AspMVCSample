@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="members">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="qqqs">
+    <Key>
+      <PropertyRef Name="ud" />
+    </Key>
+    <Property Name="ud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hi" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="member_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_memberqqq">
+    <End Role="members" Type="Self.members" Multiplicity="1" />
+    <End Role="qqqs" Type="Self.qqqs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="members">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="qqqs">
+        <PropertyRef Name="member_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testModelStoreContainer">
+    <EntitySet Name="members" EntityType="Self.members" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="qqqs" EntityType="Self.qqqs" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_memberqqq" Association="Self.FK_memberqqq">
+      <End Role="members" EntitySet="members" />
+      <End Role="qqqs" EntitySet="qqqs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
